@@ -1,0 +1,11 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+touch mesh.foam
+runApplication blockMesh
+restore0Dir
+runApplication $(getApplication)
+mv log.pisoFoam log.pisoFoam_run
+runApplication $(getApplication) -postProcess -func yPlus -latestTime
+#------------------------------------------------------------------------------

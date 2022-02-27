@@ -1,0 +1,67 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+| =========                 |                                                 |
+| \\      /  F ield         | OpenFOAM: The Open Source CFD Toolbox           |
+|  \\    /   O peration     | Version:  4.0                                   |
+|   \\  /    A nd           | Web:      www.OpenFOAM.org                      |
+|    \\/     M anipulation  |                                                 |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version     2.0;
+    format      ascii;
+    class       volScalarField;
+    object      omega;
+}
+// * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * //
+
+dimensions      [0 0 -1 0 0 0 0];
+
+internalField      uniform 5;
+
+boundaryField
+{
+
+    Tornado_humidifier_wall
+    {
+                type                       omegaWallFunction;
+                value            uniform 0;
+    }
+    Tornado_humidifier_airInletYminus
+    {
+                type                       inletOutlet;
+                inletValue           0;
+    }
+    Tornado_humidifier_airInletYplus
+    {
+                type                       inletOutlet;
+                inletValue           0;
+    }
+    Tornado_humidifier_inlet
+    {
+        type            turbulentIntensityKineticEnergyInlet;
+        intensity       0.05;
+        value           $internalField;
+    }
+    Tornado_humidifier_outlet
+    {
+                type                       zeroGradient;
+                inletValue           0;
+    }
+    Tornado_humidifier_bottom
+    {
+                type                       omegaWallFunction;
+                value            uniform 0;
+    }
+    Tornado_humidifier_top
+    {
+                type                       omegaWallFunction;
+                value            uniform 0;
+    }
+    Tornado_humidifier_fin
+    {
+                type                       omegaWallFunction;
+                value            uniform 0;
+    }
+}
+
+// ************************************************************************* //

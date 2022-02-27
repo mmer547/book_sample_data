@@ -1,0 +1,59 @@
+/*--------------------------------*- C++ -*----------------------------------*\
+|       o          |                                                          |
+|    o     o       | HELYX-OS                                                  |
+|   o   O   o      | Version: v2.3.1                                           |
+|    o     o       | Web:     http://www.engys.com                            |
+|       o          |                                                          |
+\*---------------------------------------------------------------------------*/
+FoamFile
+{
+    version 2.0;
+    format ascii;
+    class volScalarField;
+    location "0";
+    object p;
+}
+dimensions [ 0 2 -2 0 0 0 0 ];
+internalField      uniform 0.0;
+boundaryField
+{
+
+    Tornado_humidifier_wall
+    {
+        type            zeroGradient;
+    }
+    Tornado_humidifier_airInletYminus
+    {
+                type                       inletOutlet;
+                inletValue           uniform           0;
+    }
+    Tornado_humidifier_airInletYplus
+    {
+                type                       inletOutlet;
+                inletValue           uniform           0;
+    }
+    Tornado_humidifier_inlet
+    {
+        type            totalPressure;
+        p0              uniform 0;
+        value           uniform 0;
+    }
+    Tornado_humidifier_outlet
+    {
+        type            zeroGradient;
+    }
+    Tornado_humidifier_bottom
+    {
+        type            zeroGradient;
+    }
+    Tornado_humidifier_top
+    {
+        type            zeroGradient;
+    }
+    Tornado_humidifier_fin
+    {
+        type            zeroGradient;
+    }
+}
+
+// ************************************************************************* //

@@ -1,0 +1,45 @@
+#!/bin/sh
+cd "${0%/*}" || exit                                # Run from this directory
+. ${WM_PROJECT_DIR:?}/bin/tools/RunFunctions        # Tutorial run functions
+#------------------------------------------------------------------------------
+cd base
+
+runAnsysToFoam()
+{
+    if [ -f log.ansysToFoam ]
+    then
+        echo "ansysToFoam already run on $PWD: remove log file to re-run"
+    else
+        echo "Running ansysToFoam: converting mesh $1"
+        ansysToFoam $1 -scale $2 > log.ansysToFoam 2>&1
+    fi
+}
+
+runAnsysToFoam flange.ans 0.001
+touch base.foam
+cd ..
+
+cp -rf base translate_x_1
+cd translate_x_1
+runApplication transformPoints -translate '(0.06 0 0)'
+touch translate_x_1.foam
+cd ..
+
+cp -rf base rotate-angle
+cd rotate-angle
+runApplication transformPoints -rotate-angle '((0 1 0) 90)'
+mv log.transformPoints log.transformPoints-1
+runApplication transformPoints -translate '(0.12 0 0)'
+touch rotate-angle.foam
+cd ..
+
+cp -rf base scale
+cd scale
+runApplication transformPoints -scale '(0.5 0.5 0.5)'
+mv log.transformPoints log.transformPoints-1
+runApplication transformPoints -translate '(0.18 0 0)'
+touch scale.foam
+cd ..
+
+
+#------------------------------------------------------------------------------
